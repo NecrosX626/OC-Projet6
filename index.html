@@ -12,20 +12,27 @@
 </head>
 <body>
 <header>
-	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
-	<nav>
-		<ul>
-			<li><a href="#portfolio">projets</a></li>
-			<li><a href="#contact">contact</a></li>
-			<li><a href="./login.html">login</a></li>
-			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
-		</ul>
-	</nav>
+	<div class="edit hidden">
+		<span>0 Mode édition</span>
+		<a href="#" class="edit__save">publier les changements</a>
+	</div>
+	<div class="navMenu">
+		<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
+		<nav>
+			<ul>
+				<li><a href="#portfolio">projets</a></li>
+				<li><a href="#contact">contact</a></li>
+				<li><a href="./login.html" class="loginAction">login</a></li>
+				<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+			</ul>
+		</nav>
+	</div>
 </header>
 <main>
 	<section id="introduction">
 		<figure>
 			<img src="./assets/images/sophie-bluel.png" alt="">
+			<a href="#" class="edit__button hidden">0 modifier</a>
 		</figure>
 		<article>
 			<h2>Designer d'espace</h2>
@@ -35,7 +42,10 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
+		<div class="portfolio__title">
+			<h2>Mes Projets</h2>
+			<a href="#" class="edit__button hidden">0 modifier</a>
+		</div>
 		<!--AJOUTS DES FILTRES-->
 		<div class="categories">
 			<span id="All" class="filter activeFilter">Tous</span>

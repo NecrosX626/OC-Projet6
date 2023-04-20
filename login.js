@@ -24,12 +24,10 @@ async function logginRequest() {
       },
     });
     if(r.ok == true){
-        // window.location.href = "./index.html"
         return r.json()
         .then(json =>{
-          loginToken = json.token
-          console.log(loginToken)
-          localStorage.setItem("token", loginToken)
+          localStorage.setItem("token", json.token)
+          window.location.href = "./index.html"
         })
     }
     else{

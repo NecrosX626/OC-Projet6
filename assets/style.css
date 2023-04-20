@@ -59,11 +59,31 @@ body {
 }
 header {
 	display: flex;
-	justify-content: space-between;
-	margin: 50px 0
+	flex-direction: column;
 }
 section {
 	margin: 50px 0
+}
+.edit{
+	padding: 0.5em 0;
+	width: 100%;
+	background: black;
+	color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap : 1.5em;
+}
+.edit__save{
+	background-color: white;
+	border-radius: 1em;
+	padding: 0.5em 1em;
+}
+.navMenu{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 25px 0;
 }
 h1{
 	display: flex;
@@ -71,13 +91,12 @@ h1{
 	font-family: 'Syne';
 	font-size: 22px;
 	font-weight: 800;
-	color: #B1663C
+	color: #B1663C;
 }
 h1 > span {
 	font-family: 'Work Sans';
 	font-size:10px;
 	letter-spacing: 0.1em;
-;
 }
 h2{
 	font-family: 'Syne';
@@ -99,7 +118,9 @@ nav li {
 li:hover, a:hover {
 	color: #B1663C;
 }
-
+li img{
+	width: 50%;
+}
 #introduction {
 	display: flex;
 	align-items: center;
@@ -107,10 +128,11 @@ li:hover, a:hover {
 #introduction figure {
 	flex: 1
 }
-#introduction img {
+#introduction img, #introduction a{
 	display: block;
 	margin: auto;
 	width: 80%;
+	margin-bottom: 10px;
 }
 #introduction article {
 	flex: 1
@@ -122,9 +144,11 @@ li:hover, a:hover {
 #introduction p {
 	margin-bottom: 0.5em;
 }
-
-#portfolio h2 {
-	text-align: center;
+.portfolio__title{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1.5em;
 	margin-bottom: 1em;
 }
 /*AJOUTS DU STYLE DES FILTRES*/
@@ -206,9 +230,12 @@ footer nav ul {
 	justify-content: flex-end;
 	margin: 2em
 }
-
 /*LOGIN PAGE*/
 #login p{
 	text-decoration: underline;
 	color: #3D3D3D;
+}
+/*EDIT MODE*/
+.hidden{
+	display:none !important;
 }
