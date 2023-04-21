@@ -11,6 +11,8 @@ loginForm.addEventListener("submit", function (e) {
   logginRequest()
 });
 
+
+//remplacer async/await par .then
 async function logginRequest() {
     const r = await fetch(url, {
       method: "POST",
@@ -27,15 +29,14 @@ async function logginRequest() {
         return r.json()
         .then(json =>{
           localStorage.setItem("token", json.token)
-          window.location.href = "./index.html"
+          // window.location.href = "./index.html"
         })
     }
     else{
         alert('Erreur dans l’identifiant ou le mot de passe')
-        throw new Error ("Impossible de se connecter")
+        //traiter l'erreur avec un element html sous le formulaire
     }
   }
-
 
 
 // loginForm.addEventListener('submit', function(e){

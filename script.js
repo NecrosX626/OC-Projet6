@@ -71,7 +71,7 @@ function loginCheck() {
     for (let button of editButtons) {
       button.classList.remove("hidden");
     }
-    loginAction.addEventListener("click", listen(e));
+    loginAction.addEventListener("click", listen);
   }
 }
 function listen(e) {
@@ -88,7 +88,7 @@ function logout() {
   for (let button of editButtons) {
     button.classList.add("hidden");
   }
-  loginAction.removeEventListener("click", listen(e));
+  loginAction.removeEventListener("click", listen);
 }
-
 loginCheck();
+/*----------------------------------------------------------------MODALES*/
