@@ -58,37 +58,61 @@ function updateGallery() {
 }
 
 /*---------------------------------------------------------------GESTION DE LA CONNEXION*/
+const body = document.querySelector("body")
+const introFigure = document.querySelector("#introduction figure")
+const projectsTitle = document.querySelector(".portfolio__title")
 const loginAction = document.querySelector(".loginAction");
-const editHeader = document.querySelector(".edit");
-const editButtons = document.querySelectorAll(".edit__button");
+const editHeaderSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path><polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon></svg>'
+const editBtnSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path><polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon></svg>'
 
+//Vérification de la présence du Token
 function loginCheck() {
   if (localStorage.getItem("token") == null) {
     return;
   } else {
+    createEditMode()
     loginAction.innerText = "logout";
-    editHeader.classList.remove("hidden");
-    for (let button of editButtons) {
-      button.classList.remove("hidden");
-    }
     loginAction.addEventListener("click", listen);
   }
 }
+//Déconnexion
 function listen(e) {
   e.preventDefault();
   logout();
 }
-function clearStorage() {
-  localStorage.removeItem("token");
-}
 function logout() {
-  clearStorage();
+  localStorage.removeItem("token");
   loginAction.innerText = "login";
-  editHeader.classList.add("hidden");
-  for (let button of editButtons) {
-    button.classList.add("hidden");
-  }
   loginAction.removeEventListener("click", listen);
+  deleteEditMode()
+}
+//Mode Edition
+function createEditMode(){
+  //Création du Bandeau
+  let editHeader = createNode("div")
+  editHeader.classList.add("edit")
+  editHeader.innerHTML = `${editHeaderSvg} Mode édition <span class="edit__save">publier les changements</span>`
+  body.prepend(editHeader)
+  //Création des Boutons "modifier"
+  function createEditBtn(parent){
+    let editBtn = createNode("a")
+    editBtn.classList.add("edit__button")
+    editBtn.href = "#"
+    editBtn.innerHTML = `${editBtnSvg} modifier`
+    append(parent, editBtn)
+  }
+  createEditBtn(introFigure)
+  createEditBtn(projectsTitle)
+}
+function deleteEditMode(){
+  //Suppression du Bandeau
+  const editHeader = document.querySelector(".edit")
+  editHeader.remove()
+  //Suppression des Boutons
+  const editBtns = document.querySelectorAll(".edit__button")
+  for (let editBtn of editBtns){
+    editBtn.remove()
+  }
 }
 loginCheck();
 /*----------------------------------------------------------------MODALES*/

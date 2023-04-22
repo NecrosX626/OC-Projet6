@@ -3,6 +3,7 @@ const loginForm = document.querySelector("#logRequest");
 const url = "http://localhost:5678/api/users/login";
 const email = document.querySelector("#email");
 const password = document.querySelector("#motdepasse");
+const errorMessage = document.querySelector(".errorMessage")
 let logged = false
 let loginToken;
 
@@ -29,12 +30,11 @@ async function logginRequest() {
         return r.json()
         .then(json =>{
           localStorage.setItem("token", json.token)
-          // window.location.href = "./index.html"
+          window.location.href = "./index.html"
         })
     }
     else{
-        alert('Erreur dans l’identifiant ou le mot de passe')
-        //traiter l'erreur avec un element html sous le formulaire
+      errorMessage.classList.remove("hidden")
     }
   }
 
