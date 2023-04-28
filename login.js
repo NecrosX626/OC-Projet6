@@ -37,25 +37,3 @@ async function logginRequest() {
       errorMessage.classList.remove("hidden")
     }
   }
-
-
-// loginForm.addEventListener('submit', function(e){
-//     e.preventDefault()
-//     fetch(url, {
-//         method: "POST",
-//         body: JSON.stringify({
-//             email: `${email.value}`,
-//             password: `${password.value}`
-//         }),
-//         headers: {
-//             "accept": "application/json",
-//             "Content-type": "application/json; charset=UTF-8"
-//         }
-//     })
-//     .then(response => response.json(), error => error.json())
-//     .then(json => {
-//         console.log(json)
-//         loginToken = json.token
-//         // window.location.href = "./index.html"
-//     })
-// })
