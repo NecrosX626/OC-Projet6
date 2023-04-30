@@ -14,26 +14,23 @@ loginForm.addEventListener("submit", function (e) {
 
 
 //remplacer async/await par .then
-async function logginRequest() {
-    const r = await fetch(url, {
+function logginRequest() {
+    const postMethod = {
       method: "POST",
-      body: JSON.stringify({
-        email: email.value,
-        password: password.value,
-      }),
       headers: {
         accept: "application/json",
-        "Content-type": "application/json; charset=UTF-8",
+        "Content-type": "application/json; charset=UTF-8"
       },
-    });
-    if(r.ok == true){
-        return r.json()
-        .then(json =>{
-          localStorage.setItem("token", json.token)
-          window.location.href = "./index.html"
-        })
+      body: JSON.stringify({
+        email: email.value,
+        password: password.value
+      })
     }
-    else{
-      errorMessage.classList.remove("hidden")
-    }
+    fetch(url, postMethod)
+    .then((response) => response.json())
+    .then((json) =>{
+      localStorage.setItem("token", json.token)
+      window.location.href = "./index.html"
+    })
+    .catch(() => errorMessage.classList.remove("hidden"))
   }

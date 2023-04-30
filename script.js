@@ -1,10 +1,11 @@
-const url = "http://localhost:5678/api/works";
+const url = "http://localhost:5678/api/";
 const gallery = document.querySelector(".gallery");
 let works;
+let categoriesList
 /*---------------------------------------------------------------AFFICHAGE ET FILTRAGE DES TRAVAUX*/
 //Récupération des données de l'API
 function getWorks(){
-  fetch(url)
+  fetch(url + "works")
   .then((response) => response.json())
   .then((data) => {
     works = data;
@@ -60,7 +61,6 @@ function updateGallery() {
   }
   displayGallery(displayedWorks);
 }
-
 /*---------------------------------------------------------------GESTION DE LA CONNEXION*/
 const body = document.querySelector("body")
 const introFigure = document.querySelector("#introduction figure")
@@ -119,30 +119,26 @@ function deleteEditMode(){
   }
 }
 loginCheck();
+let token = localStorage.getItem("token")
 
 /*---------------------------------------------------------------CREATIONS ET UTILISATION DES MODALES*/
-const modal = document.querySelector('.modal')
-const modalHead = document.querySelector('.modal__head')
-const modalTitle = document.querySelector('.modal__head h3')
-const modalIcons = document.querySelector('.modal__head .icons')
-const modalContent = document.querySelector(".modal__content")
-const modalClose = document.querySelector(".cross")
-const modalActionBtn = document.querySelector(".modal__actions .btn")
-const deleteMsg = document.querySelector(".modal__actions .delete")
-
-//Fermeture de la Modale
-modalClose.addEventListener('click', function(){
-  modal.classList.add('hidden')
-})
+const modalA = document.querySelector('.modalA')
+const modalAClose = document.querySelector('.modalA .cross')
+const modalAContent = document.querySelector('.modalA .content')
+const modalADelete = document.querySelector('.modalA .delete')
   //MODALE A
+//Fermeture de la Modale A
+modalAClose.addEventListener('click', function(){
+  modalA.classList.add('hidden')
+})
 //Ouverture de la Modale
 function displayModal(){
-  modal.classList.remove('hidden')
+  modalA.classList.remove('hidden')
   displayModalA(works)
 }
 //Création du contenu de la Modale A (Galerie)
 function displayModalA(displayedWorks) {
-  modalContent.innerHTML = "";
+  modalAContent.innerHTML = "";
   for (let work of displayedWorks) {
     let figure = createNode("figure");
     let img = createNode("img");
@@ -151,75 +147,153 @@ function displayModalA(displayedWorks) {
     append(figure, img);
     append(figure, figcaption);
     append(figure, deleteIcon);
-    append(modalContent, figure);
+    append(modalAContent, figure);
     deleteIcon.id = work.id
     img.src = work.imageUrl;
-    figcaption.innerHTML = `<a class="modal__editBtn" href="#">éditer</a>`;
+    figcaption.innerHTML = `<a class="editBtn" href="#">éditer</a>`;
     deleteIcon.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>`
-    deleteIcon.classList.add('modal__deleteIcon')
+    deleteIcon.classList.add('deleteIcon')
     deleteIcon.href = "#"
   }
   setModalAFunction()
 }
 //Fonctionnalitées de la Modale A
 function setModalAFunction(){
-  const deleteBtns = document.querySelectorAll(".modal__deleteIcon")
+  const deleteBtns = document.querySelectorAll(".deleteIcon")
   for (let deleteBtn of deleteBtns){
     deleteBtn.addEventListener("click", deleteWork)
   }
-  const addImg = document.querySelector('.modal__actions .btn')
+  const addImg = document.querySelector('.modalA .btn')
   addImg.addEventListener('click', displayModalB)
 }
 //Requete de Suppression
 function deleteWork(){
-  let token = localStorage.getItem("token")
   const deleteMethod = {
     method: 'DELETE',
     headers: {'Authorization': `Bearer ${token}`}
   }
-  fetch(`http://localhost:5678/api/works/${this.id}`, deleteMethod)
+  fetch(`${url}works/${this.id}`, deleteMethod)
     .then(() => getWorks)
     .catch(function (error) {
       console.log(error);
     });
 }
+
+const modalB = document.querySelector('.modalB')
+const modalBBack = document.querySelector('.modalB .arrow')
+const modalBClose = document.querySelector('.modalB .cross')
+const modalBContent = document.querySelector('.modalB .content')
   //MODALE B
+//Fermeture de la Modale B
+modalBClose.addEventListener('click', function(){
+  modalB.classList.add('hidden')
+})
 //Transition à la Modale B
 function displayModalB(){
-  //Mise à jour du Head
-  modalIcons.classList.remove("modal1")
-  modalTitle.innerText = "Ajout photo"
-  let arrow = createNode("a")
-  arrow.classList.add("arrow")
-  arrow.href="#"
-  arrow.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6M12 5l-7 7 7 7"/></svg>'
-  modalIcons.prepend(arrow)
-  //Mise à Jour du Contenu
-  modalContent.innerHTML = ""
-  let div = createNode("div")
-  let label = createNode("label")
-  let input = createNode("input")
-  let icon = createNode("span")
-  let imgReq = createNode("span")
-  append(modalContent, div)
-  append(div, icon)
-  append(div, label)
-  append(div, input)
-  append(div, imgReq)
-  div.classList.add('addImg')
-  icon.classList.add('imgIcon')
-  icon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#858585" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M20.4 14.5L16 10 4 20"/></svg>'
-  label.for = 'img'
-  label.innerText = '+ Ajouter photo'
-  input.classList.add('imgInput')
-  input.type = "file"
-  input.id = "img"
-  input.name = "img"
-  input.accept = "image/png, image/jpeg"
-  imgReq.classList.add('imgReq')
-  
-  //Mise à jour des Actions
-  modalActionBtn.innerText = "Valider"
-  modalActionBtn.classList.add("btn--disabled")
-  deleteMsg.remove()
+  //Remplacement de la Modale Affichée
+  modalA.classList.add('hidden')
+  modalB.classList.remove('hidden')
+
+  //Retour à la Modale A
+  modalBBack.addEventListener('click', function(){
+    modalA.classList.remove('hidden')
+    modalB.classList.add('hidden')
+  })
+}
+//Formulaire d'ajout de Travaux
+const titleInput = document.querySelector('.modalB #title')
+const imgInput = document.querySelector('.modalB #img')
+const categoryInput = document.querySelector('.modalB #categorySelect')
+const submitForm = document.querySelector('.modalB .btn')
+const imgAddBox = document.querySelector('.modalB .imgAdd')
+let imgURL
+let catID
+resetForm()
+//Chargement d'une Image
+imgInput.addEventListener('change', function(){
+  const newImg = imgInput.files
+  // console.log(URL.createObjectURL(newImg[0]))
+  displayPreview(newImg[0])
+})
+//Prévisualisation de l'Image
+function displayPreview(img){
+  if(img.value == ""){
+    return
+  }
+  imgURL = URL.createObjectURL(img)
+  let preview = `<img src="${imgURL}" alt="preview">`
+  let previewBox = createNode("output")
+  let closePreview = createNode("a")
+  modalBContent.prepend(previewBox)
+  previewBox.prepend(closePreview)
+  previewBox.innerHTML = preview
+  if(previewBox.innerHTML != ""){
+    imgAddBox.classList.add("hidden")
+  }
+  //Suppression de la Preview
+  previewBox.addEventListener('click', function(){
+    imgInput.value = ""
+    imgAddBox.classList.remove("hidden")
+    previewBox.remove()
+  })
+}
+//Activation du Bouton de Submit
+if(titleInput.value != "" && imgInput.value != "" && categoryInput.value !=""){
+  submitForm.classList.remove("disabled")
+  console.log(imgInput.value)
+}
+else{
+  submitForm.classList.add("disabled")
+}
+
+//Reinitialisation du Formulaire
+function resetForm(){
+  imgInput.value = ""
+  titleInput.value = ""
+  categoryInput.value = ""
+}
+//Attribution de la Catégorie
+categoryInput.addEventListener('change', function(){
+  fetch(url + "categories")
+  .then((response) => response.json())
+  .then((data) => {
+    categoriesList = data
+    console.log(categoriesList)
+  })
+  .then(() => {
+    switch (categoryInput.value){
+      case "Objets" :
+        catID = 1
+        break;
+      case "Appartement" :
+        catID = 2
+        break;
+      case "Hotels & restaurants" :
+        catID = 3
+        break;
+    }
+    console.log(catID)
+  })
+})
+//Envoi du Nouvel Element à l'API
+modalBContent.addEventListener("submit", function(e){
+  e.preventDefault();
+  addWork()
+})
+function addWork(){
+  const postMethod = {
+    method: 'POST',
+    headers: {
+      accept: "application/json",
+      "Content-type": "multipart/form-data",
+      "Authorization": `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      "title": titleInput.value,
+      "image": imgURL,
+      "categoryId": catID
+    }),
+  }
+  const r = fetch(url + "works", postMethod)
+  console.log(r)
 }

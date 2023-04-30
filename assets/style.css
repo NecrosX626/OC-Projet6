@@ -345,22 +345,22 @@ footer nav ul {
   height: 100%;
   background-color: rgba(128, 128, 128, 0.5);
 }
-.modal__wrapper {
+.wrapper {
   width: 33%;
   height: max-content;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding: 5em;
-  gap: 0.5em;
+  padding: 2em;
+  gap: 2em;
   background-color: white;
 }
-.modal__head {
+.head {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
-.modal .icons {
+.icons {
   display: flex;
   justify-content: space-between;
 }
@@ -368,101 +368,103 @@ footer nav ul {
   text-align: center;
   font-size: 2em;
 }
-.modal__content {
+.content {
   display: flex;
   flex-wrap: wrap;
   padding: 1em;
-  height: 60%;
   gap: 0.5em;
 }
 .modal hr {
-  color: #b3b3b3;
-  width: 100%;
+  color: #b3b3b349;
+  width: calc(100% - 4em);
 }
-.modal__actions {
+.actions {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.modal__actions .btn {
+.modal .btn {
+  text-align: center;
+  width: 50%;
   background-color: #1d6154;
   color: white;
   border-radius: 2em;
   padding: 1em 2em;
 }
-.modal__actions .delete {
-  color: #d65353;
-  font-size: smaller;
-  margin-top: 0.5em;
-}
 /*Modal 1 : Galerie Photo*/
-.modal .modal1 {
+.modalA .icons {
   justify-content: flex-end;
 }
-.modal__content figure {
+.modalA .content figure {
   width: 18%;
   position: relative;
 }
-.modal__content img {
+.modalA .content img {
   width: 100%;
 }
-.modal__content .modal__deleteIcon {
+.modalA .content .deleteIcon {
   position: absolute;
   right: 0.5em;
   top: 0.5em;
   background-color: black;
 }
-
+.modalA .delete {
+  color: #d65353;
+  font-size: smaller;
+  margin-top: 0.5em;
+}
 /*Modale 2 : Ajout de Photo*/
-.modal__content--flex{
+.modalB .content{
   display:flex;
   flex-direction: column;
-  justify-content: center;
+  padding: 2em;
+  gap: 2em;
 }
-.addImg{
-  display:flex;
+.modalB .imgAdd{
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: #E8F1F6;
+  width: 100%;
+  padding: 1em 0;
+  gap:1em;
 }
-
-/* .imgSelect {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: rgb(193, 193, 255);
-  padding: 1em;
-  gap: 0.5em;
+.imgAdd label{
+  background-color: #CBD6DC;
+  color:#306685;
+  width: 30%;
+  text-align: center;
+  border-radius: 2em;
+  padding: 1em 2em;
+  cursor: pointer;
 }
-.imgIcon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: aliceblue;
-  width: 3em;
-  height: 3em;
-  color: grey;
+.modalB .imgInput{
+  display:none;
 }
-.imgAdd {
-  background-color: rgb(194, 194, 194);
-  border-radius: 1em;
-  padding: 0.5em 1em;
-  color: rgb(114, 114, 255);
-}
-.imgPrerequis {
-  font-size: small;
+.modalB .imgReq{
+  font-size: smaller;
   color: rgba(0, 0, 0, 0.707);
 }
-.imgDesc {
+.modalB .imgDesc{
   display: flex;
   flex-direction: column;
-  gap: 0.5em;
+  gap: 1em;
 }
-.imgDesc input {
-  box-shadow: 0 0.5em 1em rgba(137, 137, 137, 0.284);
-} */
-.modal__actions .btn--disabled {
+.imgDesc input, .imgDesc select{
+  height: 3em;
+  background-color: white;
+  border-style: none;
+  box-shadow: 0 0.25em 0.5em rgba(137, 137, 137, 0.25);
+}
+.modalB output{
+  width:50%;
+  margin: auto;
+}
+.modalB output img{
+  max-width: 100%;
+}
+.modalB .disabled {
   background-color: grey;
   color: white;
 }
