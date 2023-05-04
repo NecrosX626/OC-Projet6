@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "C:/Users/Necros-X/Desktop/Devoirs/Formations Dev/Codes"
+		},
+		{
+			"path": "../.."
+		}
+	],
+	"settings": {
+		"workbench.colorCustomizations": {
+		"[Andromeda Italic Bordered]": {
+		}
+		},
+		"liveServer.settings.multiRootWorkspaceName": "OpenClassrooms"
+	}
+}
