@@ -5,7 +5,7 @@ let worksArray;
 let categoriesList
 //Récupération des données de l'API
 function getWorks(){
-  fetch(url + "works")
+  return fetch(url + "works")
   .then((response) => response.json())
   .then((data) => {
     worksArray = data;
@@ -61,8 +61,6 @@ const body = document.querySelector("body")
 const introFigure = document.querySelector("#introduction figure")
 const projectsTitle = document.querySelector(".portfolio__title")
 const loginLink = document.querySelector(".loginLink");
-const editHeaderSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path><polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon></svg>'
-const editBtnSvg = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path><polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon></svg>'
 //Vérification de la présence du Token
 function loginCheck() {
   if (localStorage.getItem("token") == null) {
@@ -70,7 +68,7 @@ function loginCheck() {
   } else {
     createEditMode()
     loginLink.innerText = "logout";
-    loginLink.addEventListener("click", logout); //Remplacer "logout" par "listen" pour ne pas retourner a la page de connexion apres une déco
+    loginLink.addEventListener("click", listen);
   }
 }
 //Mode Edition
@@ -106,14 +104,14 @@ function createEditMode(){
   createEditBtn(projectsTitle)
 }
 //Déconnexion
-// function listen(e) {
-//   e.preventDefault();
-//   logout();
-// } (Décommenter pour ligne 73)
+function listen(e) {
+  e.preventDefault();
+  logout();
+}
 function logout() {
   localStorage.removeItem("token");
   loginLink.innerText = "login";
-  loginLink.removeEventListener("click", listen);
+  loginLink.removeEventListener("click", logout);
   deleteEditMode()
 }
 function deleteEditMode(){
@@ -207,6 +205,7 @@ function setModalAFunction(){
 }
 //Requete de Suppression
 function deleteWork(selectedWork){
+  token = localStorage.getItem("token")
   const deleteMethod = {
     method: 'DELETE',
     headers: {
@@ -215,17 +214,9 @@ function deleteWork(selectedWork){
     }
   }
   fetch(`${url}works/${selectedWork.dataset.id}`, deleteMethod)
-  .then(async() => {
-    await fetch(url + "works") //Ou bien passer getWorks en Async directement ??
-    .then((response) => response.json())
-    .then((data) => {
-      worksArray = data;
-      displayGallery(worksArray);
-    })
-    .catch(function (error) {
-      console.log(error);
-    })
-    displayModal()
+  .then(check401)
+  .then(() => {
+    getWorks().then(() => displayModal())
   })
   .catch(function (error) {
     console.log(error);
@@ -325,6 +316,7 @@ modalBContent.addEventListener("submit", function(e){
   return false // ???
 })
 function addWork(){
+  token = localStorage.getItem("token")
   const workData = new FormData()
   workData.append("title", titleInput.value) 
   workData.append("image", imgInput.files[0])
@@ -338,8 +330,17 @@ function addWork(){
     body: workData,
   }
   fetch(url + "works", postMethod)
+  .then(check401)
   .then(() => console.log("Work Added"))
   .then(() => refreshForm())
+}
+//Check 401
+function check401(r){
+  if(r.status === 401){
+    logout()
+    alert("Session expirée")
+    window.location.href = "./login.html"
+  }
 }
 //Reinitialisation du Formulaire
 function refreshForm(){
