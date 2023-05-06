@@ -30,18 +30,14 @@
     <main>
       <section id="login">
         <h2>Log In</h2>
-        <form
-          id="logRequest"
-          action="http://localhost:5678/api/users/login"
-          method="post"
-        >
+        <form id="loginForm">
           <label for="email">Email</label>
           <input type="email" name="email" id="email" required />
           <label for="motdepasse">Mot de passe</label>
           <input type="password" name="motdepasse" id="motdepasse" required />
           <input type="submit" value="Se connecter" />
         </form>
-		<span class="errorMessage hidden">Erreur dans l’identifiant ou le mot de passe</span>
+		    <span class="errorMessage hidden">Erreur dans l’identifiant ou le mot de passe</span>
         <a href="#"><p>Mot de passe oublié</p></a>
       </section>
     </main>
@@ -52,6 +48,6 @@
         </ul>
       </nav>
     </footer>
-    <script src="./login.js"></script>
+    <script type = "module" src="./assets/modules/login.js"></script>
   </body>
 </html>

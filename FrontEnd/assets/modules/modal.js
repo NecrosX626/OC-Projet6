@@ -1,138 +1,11 @@
-const url = "http://localhost:5678/api/";
-/*---------------------------------------------------------------AFFICHAGE ET FILTRAGE DES TRAVAUX*/
-const gallery = document.querySelector(".gallery");
-let worksArray;
-let categoriesList
-//Récupération des données de l'API
-function getWorks(){
-  return fetch(url + "works")
-  .then((response) => response.json())
-  .then((data) => {
-    worksArray = data;
-    displayGallery(worksArray);
-  })
-  .catch(function (error) {
-    console.log(error);
-  });
-}
-getWorks()
-//Affichage de la galerie
-function displayGallery(displayedWorks) {
-  gallery.innerHTML = "";
-  for (let work of displayedWorks) {
-    let figure = document.createElement("figure");
-    let img = document.createElement("img");
-    let figcaption = document.createElement("figcaption");
-    figure.appendChild(img)
-    figure.appendChild(figcaption)
-    gallery.appendChild(figure)
-    figure.dataset.category = work.category.name;
-    figure.dataset.title = work.title;
-    figure.id = work.id;
-    img.src = work.imageUrl;
-    figcaption.innerHTML = work.title;
-  }
-}
-//Filtrage des Travaux
-const filtersList = document.getElementsByClassName("filter");
-for (let filter of filtersList) {
-  filter.addEventListener("click", function () {
-    let previousFilter = document.querySelector(".activeFilter");
-    previousFilter.classList.remove("activeFilter");
-    filter.classList.add("activeFilter");
-    updateGallery();
-  });
-}
-function updateGallery() {
-  let activeFilter = document.querySelector(".activeFilter");
-  if (activeFilter.innerText != "Tous") {
-    displayedWorks = worksArray.filter(function (work) {
-      if(work.category.name == activeFilter.innerText){
-        return work
-      }
-    });
-  } else {
-    displayedWorks = worksArray;
-  }
-  displayGallery(displayedWorks);
-}
-/*---------------------------------------------------------------GESTION DE LA CONNEXION*/
-const body = document.querySelector("body")
-const introFigure = document.querySelector("#introduction figure")
-const projectsTitle = document.querySelector(".portfolio__title")
-const loginLink = document.querySelector(".loginLink");
-//Vérification de la présence du Token
-function loginCheck() {
-  if (localStorage.getItem("token") == null) {
-    return;
-  } else {
-    createEditMode()
-    loginLink.innerText = "logout";
-    loginLink.addEventListener("click", listen);
-  }
-}
-//Mode Edition
-function createEditMode(){
-  //Création du Bandeau
-  let editHeader = document.createElement("div")
-  let editIcon = document.createElement("i")
-  let editText = document.createElement("span")
-  let editSave = document.createElement("a")
-  editHeader.appendChild(editIcon)
-  editHeader.appendChild(editText)
-  editHeader.appendChild(editSave)
-  editHeader.classList.add("edit")
-  editIcon.classList.add("fa-solid")
-  editIcon.classList.add("fa-pen-to-square")
-  editText.innerText = "Mode édition"
-  editSave.classList.add("edit__save")
-  editSave.innerText = "publier les changements"
-  body.prepend(editHeader)
-  //Création des Boutons "modifier"
-  function createEditBtn(parent){
-    let editBtn = document.createElement("a")
-    let editBtnIcon = document.createElement("i")
-    editBtn.classList.add("edit__button")
-    editBtn.innerText = `modifier`
-    editBtnIcon.classList.add("fa-solid")
-    editBtnIcon.classList.add("fa-pen-to-square")
-    editBtn.prepend(editBtnIcon)
-    editBtn.addEventListener("click", displayModal)
-    parent.appendChild(editBtn)
-  }
-  createEditBtn(introFigure)
-  createEditBtn(projectsTitle)
-}
-//Déconnexion
-function listen(e) {
-  e.preventDefault();
-  logout();
-}
-function logout() {
-  localStorage.removeItem("token");
-  loginLink.innerText = "login";
-  loginLink.removeEventListener("click", logout);
-  deleteEditMode()
-}
-function deleteEditMode(){
-  //Suppression du Bandeau
-  const editHeader = document.querySelector(".edit")
-  editHeader.remove()
-  //Suppression des Boutons
-  const editBtns = document.querySelectorAll(".edit__button")
-  for (let editBtn of editBtns){
-    editBtn.remove()
-  }
-}
-loginCheck();
-let token = localStorage.getItem("token")
 /*---------------------------------------------------------------CREATIONS ET UTILISATION DES MODALES*/
+import { url } from "../script.js"
+import { worksArray } from "../script.js"
+import { getWorks } from "../script.js"
 const modals = document.querySelectorAll(".modal")
 const modalWrappers = document.querySelectorAll(".modal .wrapper")
 const modalsExit = document.querySelectorAll(".modal .cross")
-const modalA = document.querySelector('.modalA')
-const modalAContent = document.querySelector('.modalA .content')
-const modalADelete = document.querySelector('.modalA .delete')
+let token
 //Fermeture des Modales
 function stopPropag(e){
   e.stopPropagation()
@@ -152,13 +25,16 @@ for (let exitBtn of modalsExit){
   })
 }
 //MODALE A
+const modalA = document.querySelector('.modalA')
+const modalAContent = document.querySelector('.modalA .content')
+const modalADelete = document.querySelector('.modalA .delete')
 //Ouverture de la Modale
-function displayModal(){
+export function displayModal(){
   modalA.classList.remove('hidden')
-  displayModalA()
+  createModalA()
 }
 //Création du contenu de la Modale A (Galerie)
-function displayModalA() {
+function createModalA() {
   modalAContent.innerHTML = "";
   let displayedWorks = worksArray
   for (let work of displayedWorks) {
@@ -201,7 +77,7 @@ function setModalAFunction(){
   })
   //Bouton pour passer à la ModaleB
   const addImg = document.querySelector('.modalA .btn')
-  addImg.addEventListener('click', displayModalB)
+  addImg.addEventListener('click', switchToModalB)
 }
 //Requete de Suppression
 function deleteWork(selectedWork){
@@ -222,13 +98,12 @@ function deleteWork(selectedWork){
     console.log(error);
   });
 }
+//MODALE B
 const modalB = document.querySelector('.modalB')
 const modalBBack = document.querySelector('.modalB .arrow')
-const modalBClose = document.querySelector('.modalB .cross')
 const modalBContent = document.querySelector('.modalB .content')
-//MODALE B
 //Transition d'une Modale à l'autre
-function displayModalB(){
+function switchToModalB(){
   //Modale A vers Modale B
   modalA.classList.add('hidden')
   modalB.classList.remove('hidden')
@@ -254,9 +129,6 @@ imgInput.addEventListener('change', function(){
 })
 //Prévisualisation de l'Image
 function displayPreview(img){
-  // if(img.value == ""){
-  //   return
-  // }
   let previewBox = document.createElement("output")
   let preview = document.createElement("img")
   modalBContent.prepend(previewBox)
@@ -292,9 +164,6 @@ categoryInput.addEventListener('change', function(){
   checkForm()
   fetch(url + "categories")
   .then((response) => response.json())
-  .then((data) => {
-    categoriesList = data
-  })
   .then(() => {
     switch (categoryInput.value){
       case "Objets" :
@@ -331,7 +200,6 @@ function addWork(){
   }
   fetch(url + "works", postMethod)
   .then(check401)
-  .then(() => console.log("Work Added"))
   .then(() => refreshForm())
 }
 //Check 401
