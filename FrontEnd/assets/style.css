@@ -132,7 +132,8 @@ table {
   border-spacing: 0;
 }
 /** end reset css**/
-header, main{
+header,
+main {
   padding: 0 10%; /*?????*/
 }
 body {
@@ -170,7 +171,6 @@ h2 {
   font-size: 30px;
   color: #1d6154;
 }
-
 nav ul {
   display: flex;
   align-items: center;
@@ -194,7 +194,8 @@ li img {
 #introduction figure {
   flex: 1;
 }
-#introduction img, #introduction a {
+#introduction img,
+#introduction a {
   display: block;
   margin: auto;
   width: 80%;
@@ -209,14 +210,14 @@ li img {
 #introduction p {
   margin-bottom: 0.5em;
 }
-.portfolio__title{
+.portfolio__title {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 1.5em;
   margin-bottom: 1em;
 }
-/*AJOUTS DU STYLE DES FILTRES*/
+/*Filters Style*/
 .categories {
   display: flex;
   justify-content: center;
@@ -236,7 +237,7 @@ li img {
   color: white;
   background: #1d6154;
 }
-/*/////*/
+/*Gallery Style*/
 .gallery {
   width: 100%;
   display: grid;
@@ -247,7 +248,7 @@ li img {
 .gallery img {
   width: 100%;
 }
-
+/*Contact Form Style*/
 #contact,
 #login {
   width: 50%;
@@ -298,23 +299,22 @@ footer nav ul {
   justify-content: flex-end;
   margin: 2em;
 }
-.hidden
-{
-  display:none !important;
+.hidden {
+  display: none !important;
 }
-/*LOGIN PAGE*/
+/*Login Page Style*/
 #login p {
   text-decoration: underline;
   color: #3d3d3d;
 }
-.errorMessage{
+.errorMessage {
   display: block;
   text-align: center;
   margin-bottom: 2em;
   font-style: italic;
   color: rgb(144, 0, 0);
 }
-/*EDIT HEADER*/
+/*Edit Mode Style*/
 .edit {
   padding: 1em 0;
   width: 100%;
@@ -333,14 +333,15 @@ footer nav ul {
   color: black;
   margin-left: 1em;
 }
-.edit__button{
+.edit__button {
   padding: 1em 0;
   cursor: pointer;
 }
-.edit i, .edit__button i{
+.edit i,
+.edit__button i {
   padding-right: 0.25em;
 }
-/*MODALES*/
+/*Modals Style*/
 .modal {
   position: fixed;
   top: 0;
@@ -400,9 +401,9 @@ footer nav ul {
   border-radius: 2em;
   padding: 1em 2em;
   cursor: pointer;
-  font-family: "Syne"
+  font-family: "Syne";
 }
-/*Modal 1 : Galerie Photo*/
+/*Modal A : Gallery + Delete*/
 .modalA .icons {
   justify-content: flex-end;
 }
@@ -423,12 +424,12 @@ footer nav ul {
   padding: 0.15em;
   border-radius: 0.25em;
 }
-.modalA .content .fa-arrows-up-down-left-right{
+.modalA .content .fa-arrows-up-down-left-right {
   display: none;
   right: 1.5em;
   top: 0.5em;
 }
-.modalA figure:hover > .fa-arrows-up-down-left-right{
+.modalA figure:hover > .fa-arrows-up-down-left-right {
   display: unset;
 }
 .modalA .delete {
@@ -436,62 +437,62 @@ footer nav ul {
   font-size: smaller;
   margin-top: 1em;
 }
-/*Modale 2 : Ajout de Photo*/
-.modalB .content{
-  display:flex;
+/*Modale B : Add Work Form*/
+.modalB .content {
+  display: flex;
   flex-direction: column;
   padding: 2em;
   gap: 2em;
 }
-.modalB .imgAdd{
+.modalB .imgAdd {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #E8F1F6;
+  background-color: #e8f1f6;
   width: 100%;
   padding: 1em 0;
-  gap:1em;
+  gap: 1em;
 }
-.imgAdd i{
-  color: #CBD6DC;
+.imgAdd i {
+  color: #cbd6dc;
 }
-.imgAdd label{
-  background-color: #CBD6DC;
-  color:#306685;
+.imgAdd label {
+  background-color: #cbd6dc;
+  color: #306685;
   width: 30%;
   text-align: center;
   border-radius: 2em;
   padding: 1em 2em;
   cursor: pointer;
 }
-.modalB .imgInput{
-  display:none;
+.modalB .imgInput {
+  display: none;
 }
-.modalB .imgReq{
+.modalB .imgReq {
   font-size: smaller;
   color: rgba(0, 0, 0, 0.707);
 }
-.modalB .imgDesc{
+.modalB .imgDesc {
   display: flex;
   flex-direction: column;
   gap: 1em;
 }
-.imgDesc input, .imgDesc select{
+.imgDesc input,
+.imgDesc select {
   height: 3em;
   background-color: white;
   border-style: none;
   box-shadow: 0 0.25em 0.5em rgba(137, 137, 137, 0.25);
 }
-.modalB output{
-  display:flex;
+.modalB output {
+  display: flex;
   justify-content: center;
-  background-color:#E8F1F6;
+  background-color: #e8f1f6;
   height: max-content;
-  width:100%;
-
+  width: 100%;
 }
-.modalB output img{
+.modalB output img {
   height: 15em;
 }
 .modalB .disabled {
