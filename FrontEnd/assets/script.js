@@ -49,8 +49,6 @@ function updateGallery() {
         return work;
       }
     });
-  } else {
-    displayedWorks = worksArray;
   }
   displayGallery(displayedWorks);
 }

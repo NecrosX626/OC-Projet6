@@ -5,7 +5,7 @@ const emailInput = document.querySelector("#email");
 const passwordInput = document.querySelector("#motdepasse");
 const errorMessage = document.querySelector(".errorMessage");
 
-function logginRequest() {
+function loginRequest() {
   const postMethod = {
     method: "POST",
     headers: {
@@ -28,5 +28,5 @@ function logginRequest() {
 
 loginForm.addEventListener("submit", function (e) {
   e.preventDefault();
-  logginRequest();
+  loginRequest();
 });

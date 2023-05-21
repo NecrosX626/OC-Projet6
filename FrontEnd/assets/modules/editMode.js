@@ -1,6 +1,5 @@
 import { displayModal } from "./modal.js";
 
-/*---------------------------------------------------------------LOGIN*/
 const loginLink = document.querySelector(".loginLink");
 //Token Check
 function loginCheck() {
@@ -55,7 +54,7 @@ function listen(e) {
 function logout() {
   localStorage.removeItem("token");
   loginLink.innerText = "login";
-  loginLink.removeEventListener("click", logout);
+  loginLink.removeEventListener("click", listen);
   deleteEditMode();
 }
 function deleteEditMode() {

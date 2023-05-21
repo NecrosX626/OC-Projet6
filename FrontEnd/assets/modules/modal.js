@@ -97,6 +97,7 @@ function deleteWork(selectedWork) {
       console.log(error);
     });
 }
+
 //MODAL B
 const modalB = document.querySelector(".modalB");
 const modalBBack = document.querySelector(".modalB .arrow");
@@ -184,7 +185,7 @@ categoryInput.addEventListener("change", function () {
 modalBContent.addEventListener("submit", function (e) {
   e.preventDefault();
   addWork();
-  return false; // ???
+  //return false; // ???
 });
 function addWork() {
   token = localStorage.getItem("token");
