@@ -9,8 +9,8 @@ function loginRequest() {
   const postMethod = {
     method: "POST",
     headers: {
-      accept: "application/json",
-      "Content-type": "application/json; charset=UTF-8",
+      "accept" : "application/json",
+      "Content-type" : "application/json; charset=UTF-8",
     },
     body: JSON.stringify({
       email: emailInput.value,
@@ -18,7 +18,14 @@ function loginRequest() {
     }),
   };
   fetch(url + "users/login", postMethod)
-    .then((response) => response.json())
+    .then((response) => {
+      if (response.status !== 200){
+        throw new Error(response.status)
+      }
+      else{
+        return response.json()
+      }
+    })
     .then((json) => {
       localStorage.setItem("token", json.token);
       window.location.href = "./index.html";
